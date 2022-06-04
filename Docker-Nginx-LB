@@ -26,8 +26,9 @@ services:
   apache:
     image: httpd:latest
     container_name: app-server
-    ports:
-    - '8080:80'
+    expose:
+      - "8080"
+
 Now start multiple instances of the apache service by setting the scale parameter of the Docker Compose command to the number of services we want to start.
 
 For example:
