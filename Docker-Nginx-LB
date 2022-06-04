@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   percona-server:
     image: percona-server:8.0
@@ -7,8 +7,8 @@ services:
       - "3306"
     environment:
       - ENVIRONMENT=staging
-      - USER: admin
-      - PASSWORD: password@123
+      - USER=admin
+      - PASSWORD=password@123
     volumes:
       - ./conf:/conf
   nginx:
@@ -19,20 +19,21 @@ services:
       - percona-server
     ports:
       - "4000:4000"
-  networks:
-   default:
-    driver: bridge
-    name: DevopsTest
   apache:
     image: httpd:latest
     container_name: app-server
     expose:
       - "8080"
+networks:
+  default:
+    driver: bridge
+    name: docker-network
+    #external: true
 
-Now start multiple instances of the apache service by setting the scale parameter of the Docker Compose command to the number of services we want to start.
 
-For example:
+#Now start multiple instances of the apache service by setting the scale parameter of the Docker Compose command to the number of services we want to start.
 
-docker-compose up --scale apache=2
-The above command will start two instances of Apache application, which can be accessed at http://localhost:4000. The requests to this URL will get load balanced and distributed to one of the two apache docker containers.
+#For example:
 
+#docker-compose up --scale apache=2
+#The above command will start two instances of Apache application, which can be accessed at http://localhost:4000. The requests to this URL will get load balanced and distributed to one of the two apache docker containers.
