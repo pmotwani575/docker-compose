@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   percona-server:
-    image: percona-server:8.0
+    image: percona:8.0
     hostname: perconamysql
     expose:
       - "3306"
@@ -9,8 +9,6 @@ services:
       - ENVIRONMENT=staging
       - USER=admin
       - PASSWORD=password@123
-    volumes:
-      - ./conf:/conf
   nginx:
     image: nginx:latest
     volumes:
@@ -21,13 +19,14 @@ services:
       - "4000:4000"
   apache:
     image: httpd:latest
-    container_name: app-server
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
+    # expose:
+    #   - "8080"
 networks:
   default:
     driver: bridge
-    name: docker-network
+
     #external: true
 
 
